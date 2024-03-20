@@ -60,4 +60,22 @@ class ClienteService(private val repository: ClienteRepository) {
             throw IllegalStateException("O cliente solicitado não existe.")
         }
     }
+
+    fun validacaoLogin(email: String, senha: String): Int {
+        val cliente = repository.findByEmail(email) ?: return 0 // Retorna 0 se nenhum email correspondente for encontrado
+
+        val flag = if (cliente.email == email && verificarSenha(cliente, senha)) {
+            1
+        } else {
+            0
+        }
+
+        return flag
+    }
+
+    private fun verificarSenha(cliente: Cliente, senha: String): Boolean {
+        val criptografia = passwordEncoder.matches(senha, cliente.senha)
+        println(criptografia)
+        return criptografia
+    }
 }

@@ -38,4 +38,15 @@ class ClienteController(private val clienteService: ClienteService) {
         }
     }
 
+    @GetMapping("/login/{email}/{senha}")
+    @ResponseStatus(HttpStatus.OK)
+    fun login(@PathVariable email: String, @PathVariable senha: String): ResponseEntity<Boolean> {
+        val flag = clienteService.validacaoLogin(email, senha)
+        return if (flag == 0) {
+            ResponseEntity.ok(false)
+        } else {
+            ResponseEntity.ok(true)
+        }
+    }
+
 }
