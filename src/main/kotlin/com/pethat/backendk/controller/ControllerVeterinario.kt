@@ -23,7 +23,7 @@ class ControllerVeterinario(val service: VeterinarioService) {
 
     @PostMapping("/")
     fun insertVeterinario(@RequestBody veterinario: Veterinario): ResponseEntity<Veterinario>{
-        val veterinario = service.insertVeterinario(veterinario)
-        return ResponseEntity(veterinario, HttpStatus.CREATED)
+        val veterinarioCreated = service.insertVeterinario(veterinario)
+        return ResponseEntity(veterinarioCreated, HttpStatus.CREATED)
     }
 }
