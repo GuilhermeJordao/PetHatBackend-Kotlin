@@ -14,9 +14,9 @@ data class Veterinario(
     val nome: String,
     val crmvce: String,
     val dataHabilitacao: LocalDateTime,
-    val email: String,
+    var email: String,
     val numCelular: String,
-    val senha: String,
+    var senha: String,
     val especialidade: Especialidade,
     val turno: Turno,
     var consulta: MutableList<Consulta>
