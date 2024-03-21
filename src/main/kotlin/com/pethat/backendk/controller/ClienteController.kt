@@ -5,6 +5,8 @@ import com.pethat.backendk.service.ClienteService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.util.UriComponentsBuilder
+import java.net.URI
 
 @RestController
 @RequestMapping("api/clientes")
@@ -23,9 +25,11 @@ class ClienteController(private val clienteService: ClienteService) {
     }
 
     @PutMapping("/alterar/{email}")
-    fun atualizarClientePorEmail(@PathVariable email: String, @RequestBody clienteAtualizado: Cliente) : ResponseEntity<Cliente> {
+    fun atualizarClientePorEmail(@PathVariable email: String, @RequestBody clienteAtualizado: Cliente, uriBuilder : UriComponentsBuilder) : ResponseEntity<Cliente> {
         val cliente = clienteService.atualizarCliente(email, clienteAtualizado)
-        return ResponseEntity.ok(cliente)
+        val baseUri = uriBuilder.replacePath(null).build().toString()
+        val uri = "${baseUri}/${cliente.email}"
+        return ResponseEntity.created(URI.create(uri)).body(cliente)
     }
 
     @DeleteMapping("/excluir/{email}")
